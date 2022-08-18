@@ -2,28 +2,47 @@ import java.util.Scanner
 
 fun main() {
     val scn = Scanner(System.`in`)
-    println("Enter BMW's model,colour,speed")
-    val firstCar = Bmw(scn.nextLine(), scn.nextLine(), scn.nextInt())
-    println("Enter tesla's model,colour,speed")
+    println("Enter BMW's model,colour and it's maxSpeed")
+
+    val bmwO = BMW(scn.nextLine(), scn.nextLine(), scn.nextInt())
+    println("Enter tesla's model,colour and it's maxSpeed")
     scn.nextLine()
-    val secoundVehicle = Tesla(scn.nextLine(),scn.nextLine(),scn.nextInt())
-    println("BMW's model is ${firstCar.model} and its colour ${firstCar.colour} with a speed " +
-            "${firstCar.Speed} and a fuel type ${firstCar.fuelType()}")
-    println("tesla's model is ${secoundVehicle.model} and its colour ${secoundVehicle.colour} with a speed" +
-            " ${secoundVehicle.Speed} and a fuel type ${secoundVehicle.fuelType()}")
+    val teslaR = Tesla(scn.nextLine(), scn.nextLine(), scn.nextInt())
+
+    bmwO.getFuelType()
+    bmwO.wheelsSize()
+    teslaR.getFuelType()
+    teslaR.wheelsSize()
+
+    println("Tesla's model ${teslaR.model} and BMW's model ${bmwO.model}")
+    println("Tesla's colour is ${teslaR.colour} and BMW colour is ${bmwO.colour}")
+    println("Tesla's max speed is ${teslaR.maxSpeed} and BMW max speed is ${bmwO.maxSpeed}")
 
 }
+interface TransportType {
+    fun getFuelType()
+    fun wheelsSize()
+}
+abstract class Car(val model :String, val colour :String, val maxSpeed:Int) : TransportType {
+    abstract override fun getFuelType()
+    abstract override fun wheelsSize()
+}
+class BMW(model:String,colour:String,maxSpeed:Int) :Car(model, colour, maxSpeed){
+    override fun getFuelType() {
+        println ("BMW use gasoline 95")
+    }
 
-abstract class Car (val model:String,val colour:String,val Speed:Int){
-    abstract fun fuelType():String
-}
-class Bmw(model: String,colour: String,Speed: Int): Car(model, colour, Speed){
-    override fun fuelType(): String {
-        return "Gasoline 95"
+    override fun wheelsSize() {
+        println ("19-inch")
     }
 }
-class Tesla(model: String,colour: String,Speed: Int):Car(model, colour, Speed){
-    override fun fuelType(): String {
-        return "Electric car"
+class Tesla(model:String,colour:String,maxSpeed:Int) : Car(model, colour, maxSpeed) {
+    override fun getFuelType() {
+        println(" Tesla is an electric")
+    }
+
+    override fun wheelsSize() {
+        println ("18-inch")
     }
 }
+
